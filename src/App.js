@@ -1,12 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Header from "./components/header";
+import { connect } from 'react-redux';
+import * as actions from '../src/actions';
 
-function App() {
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+  render() {
   return (
-    <div className="App">
-      
+    <div className="bg-primary h-full text-secondary">
+      <Header/>
     </div>
   );
-}
+}}
 
-export default App;
+export default connect(null, actions)(App);
