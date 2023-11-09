@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../src/actions';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; 
 import Home from './components/home';
+import Footer from './components/footer';
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
@@ -21,6 +22,7 @@ class App extends Component {
             </Routes>
           </div>
         </BrowserRouter>
+        <Footer/>
     </div>
   );
 }}

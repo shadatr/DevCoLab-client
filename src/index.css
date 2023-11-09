@@ -25,3 +25,17 @@ body {
   from, to { border-color: transparent }
   50% { border-color: orange }
 }
+
+.about-img{
+  background: url("./components/images/background.jpeg");
+}
+
+.about{
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.109); /* Add a background color with some transparency for the blur to work effectively */
+}
+
+.advantage{
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.531);
+}
