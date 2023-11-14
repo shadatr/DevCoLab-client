@@ -5,6 +5,8 @@ import * as actions from '../src/actions';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; 
 import Home from './components/home';
 import Footer from './components/footer';
+import Explore from './components/explore';
+import Posting from './components/posting';
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
@@ -17,7 +19,8 @@ class App extends Component {
           <div>
             <Routes> 
               <Route path="/" element={<Home />} /> 
-              {/* <Route exact path="/surveys" element={} /> */}
+              <Route  path="/explore" element={<Explore/>} />
+              <Route  path="/posting" element={<Posting/>} />
               {/* <Route path="/surveys/new" element={<SurveyNew />} />  */}
             </Routes>
           </div>
