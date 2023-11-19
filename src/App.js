@@ -7,6 +7,8 @@ import Home from './components/home';
 import Footer from './components/footer';
 import Explore from './components/explore';
 import Posting from './components/posting';
+import Post from './components/post';
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
@@ -21,7 +23,8 @@ class App extends Component {
               <Route path="/" element={<Home />} /> 
               <Route  path="/explore" element={<Explore/>} />
               <Route  path="/posting" element={<Posting/>} />
-              {/* <Route path="/surveys/new" element={<SurveyNew />} />  */}
+              <Route  path="/post/:id" element={<Post/>} />
+
             </Routes>
           </div>
         </BrowserRouter>
