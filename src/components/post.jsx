@@ -2,10 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
+import { toast } from "react-hot-toast";
 
 const Post = () => {
   const { id } = useParams();
   const [post, setPost] = useState();
+  const [commentText, setCommentText] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const uploadData = () => {
@@ -16,7 +19,6 @@ const Post = () => {
     };
     uploadData();
   }, [id]);
-  console.log(post);
 
   function encodeBase64(buffer) {
     let binary = "";
@@ -29,6 +31,22 @@ const Post = () => {
 
     return btoa(binary);
   }
+
+  const handelPost = () => {
+    const data = {
+      user_id: this.props.auth.id,
+      post_id: id,
+      text: commentText,
+    };
+    try {
+      axios.post("/api/comment/1", data);
+      toast.success("Successfully posted!");
+    } catch (error) {
+      console.error("Error posting post:", error);
+      toast.error("error happend while posting the comment!");
+    }
+    setRefresh(!refresh);
+  };
 
   return (
     <div className="flex justify-center items-center w-[100%]">
@@ -57,6 +75,24 @@ const Post = () => {
             })}
           </div>
           <div className="border-t border-gray"></div>
+          <div className="flex items-center  m-5">
+            <span className="inline-block rounded-full overflow-hidden lg:w-[40px] lg:h-[40px] sm:w-[30px] sm:h-[30px]">
+              <BsPersonCircle size="40" />
+            </span>
+            <span className="px-2">
+              <textarea
+                placeholder="Reply on the post..."
+                className="outline-none border border-gray bg-primary lg:px-5 lg:py-4 sm:px-2 sm:py-2  lg:w-[700px] sm:w-[200px] rounded-[15px] lg:h-[60px] sm:h-[40px]"
+                onChange={(e) => setCommentText(e.target.value)}
+              />
+            </span>
+            <span
+              className="bg-lightRed lg:px-8 lg:py-3 sm:px-3 sm:py-1 rounded-[20px] font-bold cursor-pointer"
+              onClick={handelPost}
+            >
+              Post
+            </span>
+          </div>
         </div>
       ) : (
         ""
