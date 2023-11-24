@@ -3,22 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { toast } from "react-hot-toast";
+import { connect } from "react-redux";
 
 const Post = () => {
   const { id } = useParams();
-  const [post, setPost] = useState();
+  const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    const uploadData = () => {
-      axios.get(`/api/post/${id}`).then((res) => {
+    const uploadData = async () => {
+      try {
+        const res = await axios.get(`/api/post/${id}`);
         setPost(res.data);
-        console.log(res.data);
-      });
+        const res2 = await axios.get(`/api/post/${id}/comments`);
+        setComments(res2.data);
+        console.log(res2.data)
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
     };
+
     uploadData();
-  }, [id]);
+  }, [id,refresh]);
 
   function encodeBase64(buffer) {
     let binary = "";
@@ -32,26 +40,27 @@ const Post = () => {
     return btoa(binary);
   }
 
-  const handelPost = () => {
+  const handlePost = () => {
     const data = {
-      user_id: this.props.auth.id,
       post_id: id,
       text: commentText,
     };
+
     try {
-      axios.post("/api/comment/1", data);
+      axios.post("/api/post/comment", data);
       toast.success("Successfully posted!");
     } catch (error) {
-      console.error("Error posting post:", error);
-      toast.error("error happend while posting the comment!");
+      console.error("Error posting comment:", error);
+      toast.error("Error occurred while posting the comment!");
     }
+
     setRefresh(!refresh);
   };
 
   return (
-    <div className="flex justify-center items-center w-[100%]">
-      {post ? (
-        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[300px] p-10 rounded-[30px] m-10 text-md">
+    <div className="flex flex-col justify-center items-center w-[100%]">
+      {post && (
+        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[300px] p-10 rounded-[30px] mt-10 text-md">
           <div className="flex gap-5 items-center">
             <p className="">
               <BsPersonCircle size="60" />
@@ -61,9 +70,7 @@ const Post = () => {
           <p>{post.text}</p>
           <div className="grid grid-cols-2">
             {post.images.map((image, index) => {
-              const dataURL = `data:image/jpeg;base64,${encodeBase64(
-                image.data
-              )}`;
+              const dataURL = `data:image/jpeg;base64,${encodeBase64(image.data)}`;
               return (
                 <img
                   key={index}
@@ -74,31 +81,46 @@ const Post = () => {
               );
             })}
           </div>
-          <div className="border-t border-gray"></div>
-          <div className="flex items-center  m-5">
+          <div className="border-t border-gray"/>
+          <div className="flex items-center justify-center  m-5">
             <span className="inline-block rounded-full overflow-hidden lg:w-[40px] lg:h-[40px] sm:w-[30px] sm:h-[30px]">
               <BsPersonCircle size="40" />
             </span>
             <span className="px-2">
               <textarea
-                placeholder="Reply on the post..."
+                placeholder="Comment on the post..."
                 className="outline-none border border-gray bg-primary lg:px-5 lg:py-4 sm:px-2 sm:py-2  lg:w-[700px] sm:w-[200px] rounded-[15px] lg:h-[60px] sm:h-[40px]"
                 onChange={(e) => setCommentText(e.target.value)}
               />
             </span>
             <span
               className="bg-lightRed lg:px-8 lg:py-3 sm:px-3 sm:py-1 rounded-[20px] font-bold cursor-pointer"
-              onClick={handelPost}
+              onClick={handlePost}
             >
               Post
             </span>
           </div>
         </div>
-      ) : (
-        ""
       )}
+      <div className="flex flex-col items-center gap-4 ">
+      {comments.map((comment)=>
+      <span className=" flex  items-center justify-start w-[900px]">
+        <span className="flex flex-col gap-5">
+        <div className="border-t border-gray w-[900px]"/>
+        <span className="flex items-center gap-5">
+         <BsPersonCircle size="40" />
+         <h1 className="text-sm font-bold">{comment.user_name}</h1>
+        </span>
+        <h1>{comment.text}</h1>
+        </span>
+      </span>)}
+      </div>
     </div>
   );
 };
 
-export default Post;
+const mapStateToProps = ({ auth }) => ({
+  auth,
+});
+
+export default connect(mapStateToProps)(Post);
