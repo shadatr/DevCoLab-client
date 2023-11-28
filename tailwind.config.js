@@ -13,6 +13,7 @@ module.exports = {
         lightRed: "#C52727",
         darkRed: "#6E2E2E",
         gray: "#908E8E",
+        darkGray:"#161616"
       },
       fontSize: {
         xxlg: "60px",

@@ -70,7 +70,7 @@ function Explore(props) {
           </button>
         </div>
       </div>
-      {activeTab=="Tab 1"
+      {activeTab==="Tab 1"
         ? allPosts.map((post) => (
             <a
               href={`/post/${post._id}`}
@@ -101,7 +101,7 @@ function Explore(props) {
             </a>
           ))
         : ""}
-        {activeTab=="Tab 2"
+        {activeTab==="Tab 2"
         ? myPosts.map((post) => (
             <a
               href={`/post/${post._id}`}

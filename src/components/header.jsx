@@ -23,7 +23,7 @@ class Header extends Component {
             </a>
             </span>
           ) : (
-            <a  href="/login">
+            <a  href="/auth/login">
               <span className="bg-lightRed py-2 px-5">
               Login
                 </span></a>

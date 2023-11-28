@@ -8,6 +8,8 @@ import Footer from './components/footer';
 import Explore from './components/explore';
 import Posting from './components/posting';
 import Post from './components/post';
+import LoginPage from './components/login';
+import SignUpPage from './components/signup';
 
 class App extends Component {
   componentDidMount() {
@@ -24,7 +26,8 @@ class App extends Component {
               <Route  path="/explore" element={<Explore/>} />
               <Route  path="/posting" element={<Posting/>} />
               <Route  path="/post/:id" element={<Post/>} />
-
+              <Route  path="/auth/login" element={<LoginPage/>} />
+              <Route  path="/auth/signup" element={<SignUpPage/>} />
             </Routes>
           </div>
         </BrowserRouter>

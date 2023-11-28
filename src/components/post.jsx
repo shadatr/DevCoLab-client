@@ -19,7 +19,6 @@ const Post = () => {
         setPost(res.data);
         const res2 = await axios.get(`/api/post/${id}/comments`);
         setComments(res2.data);
-        console.log(res2.data)
       } catch (error) {
         console.error("Error fetching post:", error);
       }
