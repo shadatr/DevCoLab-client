@@ -1,20 +1,32 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
-
-    const data= {
-        email: email,
-        password: password
+    e.preventDefault();
+  
+    const data = {
+      name: email,
+      password: password,
+    };
+    
+    try {
+      const response = await axios.post("/api/login", data)
+      const userObject = response.data;
+      console.log(response)
+      Cookies.set('user', JSON.stringify(userObject));
+      navigate('/');
+    } catch (error) {
+      console.error("Error during login:", error);
     }
-    axios.get("/api/login", data).then((res)=> {if(res.data){console.log(res.data)}})
   };
+  
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
@@ -49,12 +61,12 @@ const LoginPage = () => {
         >
           Login
         </button>
-        <a
+        {/* <a
         href='/auth/google'
           className=" m-3 bg-darkGray lg:w-[350px] flex justify-center items-center sm:w-[270px] text-white font-semibold px-4 py-2 rounded-md h-[50px]"
         >
           Login With Google
-        </a>
+        </a> */}
         <p className="p-5">Do not have an account?</p>
         <a className="p-1 text-blue" href={"/auth/signup"}>
           SignUp

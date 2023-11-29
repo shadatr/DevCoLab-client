@@ -25,11 +25,10 @@ const SignUpPage = () => {
       toast.error("The password doesn't match");
       return;
     }
-    
 
     const data = {
       password: password1.current.value,
-      email: email.current.value,
+      name: email.current.value,
     };
     try {
       axios.post("/api/signup", data);
