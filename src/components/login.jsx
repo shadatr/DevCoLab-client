@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,11 +20,18 @@ const LoginPage = () => {
     try {
       const response = await axios.post("/api/login", data)
       const userObject = response.data;
-      console.log(response)
-      Cookies.set('user', JSON.stringify(userObject));
-      navigate('/');
+      console.log(userObject)
+      if(userObject.name){
+        Cookies.set('user', JSON.stringify(userObject));
+        toast.success("success")
+        navigate('/');
+        window.location.reload();
+      }
+      else{
+        toast.error("error")
+      }
     } catch (error) {
-      console.error("Error during login:", error);
+      toast.error("error")
     }
   };
   

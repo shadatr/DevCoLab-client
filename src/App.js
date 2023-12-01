@@ -10,6 +10,7 @@ import Posting from './components/posting';
 import Post from './components/post';
 import LoginPage from './components/login';
 import SignUpPage from './components/signup';
+import { Toaster } from 'react-hot-toast';
 
 class App extends Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class App extends Component {
           </div>
         </BrowserRouter>
         <Footer/>
+        <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );
 }}

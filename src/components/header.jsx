@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import logo from "../components/images/logo.png";
@@ -10,12 +9,8 @@ const Header = () => {
 
   useEffect(() => {
     const download = async () => {
-      try {
         const userCookie = JSON.parse(Cookies.get("user"));
         setUserData(userCookie);
-      } catch (error) {
-        console.error("Error during login:", error);
-      }
     };
     download();
   }, []);
@@ -27,7 +22,7 @@ const Header = () => {
         <a href="/explore">Explore</a>
         <a href="/#about">About</a>
         <a href="/#contact-us">Contact Us</a>
-        {userData ? (
+        {userData.name ? (
           <span className="flex items-center justify-center gap-3">
             <a href="/">
               {userData.name} 
@@ -37,7 +32,7 @@ const Header = () => {
             </a>
           </span>
         ) : (
-          <a href="/api/login">
+          <a href="/auth/login">
             <span className="bg-lightRed py-2 px-5" >Login</span>
          </a>
         )}

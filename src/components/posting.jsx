@@ -5,6 +5,8 @@ import { BsPersonCircle } from "react-icons/bs";
 import { TiDelete } from "react-icons/ti";
 import { AiOutlinePicture } from "react-icons/ai";
 import axios from "axios";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 function Posting(props) {
   const [selectedImage, setSelectedImage] = useState([]);
@@ -23,14 +25,17 @@ function Posting(props) {
   };
 
   const handelPost = async () => {
+    const userCookie = JSON.parse(Cookies.get("user"));
     const data = new FormData();
     data.append("text", postText);
+    data.append("id", userCookie.id);
+    data.append("name", userCookie.name);
 
     for (const image of selectedImage) {
       data.append("images", image);
     }
-    console.log(data.get("images"));
     axios.post("/api/post", data);
+    toast.success("Successfully posted!");
   };
 
   const handleDelete = (name) => {

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { redirect } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function Explore(props) {
   const [allPosts, setAllPosts] = useState([]);
@@ -11,11 +12,12 @@ function Explore(props) {
 
   useEffect(() => {
     try {
+      const userCookie = JSON.parse(Cookies.get("user"));
       axios.get("/api/allPosts").then((res) => {
         setAllPosts(res.data);
         console.log(res.data);
       });
-      axios.get("/api/myPosts").then((res) => {
+      axios.get("/api/myPosts", { params: { user_id: userCookie.id } }).then((res) => {
         setMyPosts(res.data);
         console.log(res.data);
       });

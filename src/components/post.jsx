@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import { connect } from "react-redux";
+import Cookies from "js-cookie";
 
 const Post = () => {
   const { id } = useParams();
@@ -40,7 +41,10 @@ const Post = () => {
   }
 
   const handlePost = () => {
+    const userCookie = JSON.parse(Cookies.get("user"));
     const data = {
+      id:userCookie.id,
+      name:userCookie.name,
       post_id: id,
       text: commentText,
     };
@@ -49,7 +53,6 @@ const Post = () => {
       axios.post("/api/post/comment", data);
       toast.success("Successfully posted!");
     } catch (error) {
-      console.error("Error posting comment:", error);
       toast.error("Error occurred while posting the comment!");
     }
 
