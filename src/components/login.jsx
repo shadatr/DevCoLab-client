@@ -40,7 +40,7 @@ const LoginPage = () => {
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleLogin}
-        className="border border-gray p-8 rounded-[30px] flex items-center justify-center flex-col shadow-lg lg:w-[500px] h-[550px] sm:w-[300px]"
+        className="border border-gray p-8 rounded-[30px] flex items-center justify-center flex-col shadow-lg lg:w-[500px] lg:h-[550px] sm:h-[450px] sm:w-[300px]"
       >
         <h1 className="lg:text-[30px] font-bold m-3 sm:text-[15px]">
           Login To Your Account

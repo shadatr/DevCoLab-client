@@ -73,30 +73,30 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex h-[88vh] w-[100%] justify-center items-center gap-20">
-        <div className="flex flex-col text-xlg">
-          <span className="flex items-center gap-5  w-[430px] h-10">
+      <div className="flex lg:flex-row sm:flex-col h-[88vh] w-[100%] justify-center items-center gap-20">
+        <div className="flex flex-col lg:text-xlg sm:text-lg p-5">
+          <span className="flex items-center gap-5 lg:w-[430px] sm:w-[200px] h-10">
             <span className="word-typing text-lightRed" />
-            <span className="border-t-[5px] border-5 border-secondary w-[100px]" />
+            <span className="border-t-[5px] border-5 border-secondary lg:w-[100px] sm:w-[50px]" />
           </span>
           <span>Join and Elevate Your Craft.</span>
         </div>
-        <div className="w-[348px] text-md">
+        <div className="lg:w-[348px] sm:w-[300px] text-md">
           Explore other developers projects and post your projects to get
           feedback from other developers!
         </div>
       </div>
-      <div className="bg-secondary h-screen text-primary w-[100%] flex flex-col items-center justify-center gap-40">
-        <div className="flex items-center gap-20">
-          <span className="text-gray text-xlg">What is DevCoLab?</span>
-          <span className="w-[520px] p-10 text-md bg-lightRed text-secondary">
+      <div className="bg-secondary h-screen text-primary w-[100%] flex flex-col items-center justify-center lg:gap-40 sm:gap-20">
+        <div className="flex lg:flex-row sm:flex-col items-center gap-20">
+          <span className="text-gray lg:text-xlg sm:text-lg">What is DevCoLab?</span>
+          <span className="lg:w-[520px] sm:w-screen lg:p-10 sm:p-5 lg:text-md sm:text-xsm bg-lightRed text-secondary">
             DevCoLab is the ultimate platform for developers to share their
             projects, gain valuable feedback, and ignite their creative
             potential. It's more than just a website; it's a dynamic hub where
             talented developers come together to transform ideas into reality.
           </span>
         </div>
-        <div className="text-gray text-xsm w-[630px] text-center">
+        <div className="text-gray text-xxsm lg:w-[630px] sm:w-screen text-center">
           Ready to embark on a journey of coding excellence? Dive into DevCoLab
           and discover a world of endless possibilities. Whether you're seeking
           inspiration, feedback, or just a supportive developer network, we've
@@ -106,12 +106,12 @@ const Home = () => {
       </div>
       <div className="about-img h-screen" id="about">
         <div className="about flex h-screen w-[100%] justify-center items-center">
-            <span className="grid grid-cols-2 text-primary w-[900px] ">
+            <span className="grid grid-cols-2  text-primary lg:w-[900px] sm:w-[350px]">
                 {advantages.map((item)=>
-                <span className="advantage flex justify-center items-center flex-col w-[300px] text-center p-5 font-bold m-5 gap-3 rounded-[30px]">
-                    <img src={item.image} width={100} alt="icon"></img>
-                    <p className="text-md">{item.title}</p>
-                    <p className="">{item.description}</p>
+                <span className="advantage flex justify-center items-center flex-col lg:w-[300px] sm:w-[150px] text-center p-5 font-bold m-5 gap-3 rounded-[30px]">
+                    <img src={item.image} width={100} className="lg:w-[100px] sm:w-[50px]" alt="icon"></img>
+                    <p className="lg:text-md sm:text-xsm">{item.title}</p>
+                    <p className="lg:text-xsm sm:text-xxsm">{item.description}</p>
                 </span>)}
             </span>
         </div>

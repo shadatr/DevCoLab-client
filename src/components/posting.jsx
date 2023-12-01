@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { redirect } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
@@ -11,6 +11,18 @@ import toast from "react-hot-toast";
 function Posting(props) {
   const [selectedImage, setSelectedImage] = useState([]);
   const [postText, setPostText] = useState();
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const download = async () => {
+      const userCookie = Cookies.get("user");
+      if (userCookie) {
+        const parsedUser = JSON.parse(userCookie);
+        setUserData(parsedUser);
+      }
+    };
+    download();
+  }, []);
 
   if (!props?.auth || !props.auth.name) {
     redirect("/");
@@ -25,11 +37,10 @@ function Posting(props) {
   };
 
   const handelPost = async () => {
-    const userCookie = JSON.parse(Cookies.get("user"));
     const data = new FormData();
     data.append("text", postText);
-    data.append("id", userCookie.id);
-    data.append("name", userCookie.name);
+    data.append("id", userData.id);
+    data.append("name", userData.name);
 
     for (const image of selectedImage) {
       data.append("images", image);
@@ -43,22 +54,24 @@ function Posting(props) {
   };
 
   return (
-    <div className=" flex flex-col items-center justify-center w-[100%] ">
-      <div className=" lg:w-[800px] sm:w-[300px] border border-gray p-5 rounded-[30px] m-10">
+    <div className=" flex flex-col items-center justify-center w-[100%] h-[82vh] lg:text-sm sm:text-xxsm">
+      <div className=" lg:w-[800px] sm:w-[300px] border border-gray p-4 lg:rounded-[30px] sm:rounded-[20px]  m-10">
         <span>
           <div className="flex gap-5 items-center">
-            <p className="">
+            <p className="lg:flex sm:hidden">
               <BsPersonCircle size="40" />
             </p>
-            <p>
-              <h1 className="text-sm font-bold">{props?.auth?.name}</h1>
-              <h2 className="text-xsm">{props?.auth?.surname}</h2>
+            <p className="lg:hidden">
+              <BsPersonCircle size="20" />
             </p>
+            <h1 className="lg:text-sm sm:text-xsm font-bold">
+              {userData.name}
+            </h1>
           </div>
         </span>
-        <div className="bg-primary w-full rounded-[20px] p-8">
+        <div className="bg-primary w-full lg:rounded-[20px] sm:rounded-[20px] lg:p-8 sm:py-4">
           <textarea
-            className="bg-primary w-full outline-none lg:h-[300px] sm:h-[150px]"
+            className="bg-primary w-full outline-none lg:h-[300px] sm:h-[150px] lg:text-sm sm:text-xxsm"
             placeholder="write your post here..."
             onChange={(e) => setPostText(e.target.value)}
           />
@@ -85,7 +98,12 @@ function Posting(props) {
             {selectedImage.length < 4 ? (
               <>
                 <label htmlFor="fileInput">
-                  <AiOutlinePicture size="30" className="cursor-pointer " />
+                  <p className="lg:flex sm:hidden">
+                    <AiOutlinePicture size="30" className="cursor-pointer " />
+                  </p>
+                  <p className="lg:hidden">
+                    <AiOutlinePicture size="20" className="cursor-pointer " />
+                  </p>
                 </label>
                 <input
                   type="file"
@@ -97,11 +115,22 @@ function Posting(props) {
                 />
               </>
             ) : (
-              <AiOutlinePicture
-                size="30"
-                color="gray"
-                className="cursor-pointer "
-              />
+              <span>
+                <p className="lg:flex sm:hidden">
+                  <AiOutlinePicture
+                    size="30"
+                    color="gray"
+                    className="cursor-pointer "
+                  />
+                </p>
+                <p className="lg:hidden">
+                  <AiOutlinePicture
+                    size="20"
+                    color="gray"
+                    className="cursor-pointer "
+                  />
+                </p>
+              </span>
             )}
             <span
               className="bg-lightRed lg:px-10 lg:py-3 sm:px-5 sm:py-1 rounded-[20px] font-bold cursor-pointer "

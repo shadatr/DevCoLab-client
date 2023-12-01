@@ -20,8 +20,9 @@ module.exports = {
         xlg: "48px",
         lg: "32px",
         md: "20px",
-        sm:"16px",
+        sm:"18px",
         xsm:"15px",
+        xxsm:"8px"
       },
     },
     screens: {

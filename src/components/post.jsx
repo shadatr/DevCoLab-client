@@ -26,7 +26,7 @@ const Post = () => {
     };
 
     uploadData();
-  }, [id,refresh]);
+  }, [id, refresh]);
 
   function encodeBase64(buffer) {
     let binary = "";
@@ -43,8 +43,8 @@ const Post = () => {
   const handlePost = () => {
     const userCookie = JSON.parse(Cookies.get("user"));
     const data = {
-      id:userCookie.id,
-      name:userCookie.name,
+      id: userCookie.id,
+      name: userCookie.name,
       post_id: id,
       text: commentText,
     };
@@ -60,38 +60,51 @@ const Post = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-[100%]">
+    <div className="flex flex-col justify-center items-center w-[100%] min-h-[85vh] lg:text-sm sm:text-xxsm">
       {post && (
-        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[300px] p-10 rounded-[30px] mt-10 text-md">
+        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[350px] lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:mt-4 ">
           <div className="flex gap-5 items-center">
-            <p className="">
-              <BsPersonCircle size="60" />
+            <p className="lg:flex sm:hidden">
+              <BsPersonCircle size="40" />
             </p>
-            <h1 className="text-sm font-bold">{post.user_name}</h1>
+            <p className="lg:hidden">
+              <BsPersonCircle size="20" />
+            </p>
+            <h1 className="lg:text-sm sm:text-xsm font-bold">
+              {post.user_name}
+            </h1>
           </div>
           <p>{post.text}</p>
           <div className="grid grid-cols-2">
             {post.images.map((image, index) => {
-              const dataURL = `data:image/jpeg;base64,${encodeBase64(image.data)}`;
+              const dataURL = `data:image/jpeg;base64,${encodeBase64(
+                image.data
+              )}`;
               return (
                 <img
                   key={index}
                   src={dataURL}
                   alt={`Post ${index}`}
-                  className="w-[450px] rounded-[20px]"
+                  className="lg:w-[350px] sm:w-[160px] rounded-[20px]"
                 />
               );
             })}
           </div>
-          <div className="border-t border-gray"/>
-          <div className="flex items-center justify-center  m-5">
-            <span className="inline-block rounded-full overflow-hidden lg:w-[40px] lg:h-[40px] sm:w-[30px] sm:h-[30px]">
+
+          <div className="border-t border-gray" />
+          <div className="flex items-center justify-center lg:m-5 sm:m-1">
+            <span className=" lg:w-[40px] lg:h-[40px] sm:w-[30px] sm:h-[30px]">
+            <p className="lg:flex sm:hidden">
               <BsPersonCircle size="40" />
+            </p>
+            <p className="lg:hidden">
+              <BsPersonCircle size="20" />
+            </p>
             </span>
             <span className="px-2">
               <textarea
                 placeholder="Comment on the post..."
-                className="outline-none border border-gray bg-primary lg:px-5 lg:py-4 sm:px-2 sm:py-2  lg:w-[700px] sm:w-[200px] rounded-[15px] lg:h-[60px] sm:h-[40px]"
+                className="outline-none border border-gray bg-primary lg:px-5 lg:py-4 sm:px-2 sm:py-2  lg:w-[700px] sm:w-[200px] lg:rounded-[15px] sm:rounded-[5px] lg:h-[60px] sm:h-[30px]"
                 onChange={(e) => setCommentText(e.target.value)}
               />
             </span>
@@ -104,18 +117,28 @@ const Post = () => {
           </div>
         </div>
       )}
-      <div className="flex flex-col items-center gap-4 ">
-      {comments.map((comment)=>
-      <span className=" flex  items-center justify-start w-[900px]">
-        <span className="flex flex-col gap-5">
-        <div className="border-t border-gray w-[900px]"/>
-        <span className="flex items-center gap-5">
-         <BsPersonCircle size="40" />
-         <h1 className="text-sm font-bold">{comment.user_name}</h1>
-        </span>
-        <h1>{comment.text}</h1>
-        </span>
-      </span>)}
+      <div className="flex flex-col w-[100%] justify-center items-center lg:gap-4 sm:gap-2 ">
+        {comments.map((comment) => (
+          <span className=" flex items-center justify-start lg:w-[900px] sm:w-[300px]">
+            <span className="flex flex-col gap-5">
+              <div className="border-t border-gray lg:w-[900px] sm:w-[300px]" />
+              <span className="flex items-center gap-5">
+              <div className="flex gap-5 items-center">
+            <p className="lg:flex sm:hidden">
+              <BsPersonCircle size="40" />
+            </p>
+            <p className="lg:hidden">
+              <BsPersonCircle size="20" />
+            </p>
+            <h1 className="lg:text-sm sm:text-xsm font-bold">
+              {post.user_name}
+            </h1>
+          </div>
+              </span>
+              <h1>{comment.text}</h1>
+            </span>
+          </span>
+        ))}
       </div>
     </div>
   );
