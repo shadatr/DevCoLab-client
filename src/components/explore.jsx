@@ -20,7 +20,7 @@ function Explore(props) {
         const parsedUser = JSON.parse(userCookie);
         axios.get("/api/allPosts").then((res) => {
           setAllPosts(res.data);
-          setLoading(false)
+          setLoading(false);
         });
         axios
           .get("/api/myPosts", { params: { user_id: parsedUser.id } })
@@ -83,79 +83,97 @@ function Explore(props) {
       </div>
       {loading ? (
         <div className="items-center justify-cente flex h-[50vh] mt-[200px]">
-          <LoadingIcons.TailSpin stroke="white" width='100' height='100' speed={.8}  />
+          <LoadingIcons.TailSpin
+            stroke="white"
+            width="100"
+            height="100"
+            speed={0.8}
+          />
         </div>
       ) : (
-      <div>
-      {activeTab === "Tab 1"
-        ? allPosts.map((post) => (
-            <a
-              href={`/post/${post._id}`}
-              className="flex flex-col gap-5 lg:w-[800px] sm:w-[300px] border border-gray lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:m-4 lg:text-sm sm:text-xxsm"
-            >
-              <div className="flex gap-5 items-center">
-                <p className="lg:flex sm:hidden">
-                  <BsPersonCircle size="40" />
-                </p>
-                <p className="lg:hidden">
-                  <BsPersonCircle size="20" />
-                </p>
-                <h1 className="lg:text-sm sm:text-xsm font-bold">{post.user_name}</h1>
-              </div>
-              <p>{post.text}</p>
-              <div className="grid grid-cols-2">
-                {post.images.map((image, index) => {
-                  const dataURL = `data:image/jpeg;base64,${encodeBase64(
-                    image.data
-                  )}`;
-                  return (
-                    <img
-                      key={index}
-                      src={dataURL}
-                      alt={`Post ${index}`}
-                      className="lg:w-[350px] sm:w-[160px] rounded-[20px]"
-                    />
-                  );
-                })}
-              </div>
-            </a>
-          ))
-        : ""}
-      {activeTab === "Tab 2"
-        ? myPosts.map((post) => (
-            <a
-              href={`/post/${post._id}`}
-              className="flex flex-col gap-5 lg:w-[800px] sm:w-[300px] border border-gray lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:m-4 lg:text-sm sm:text-xxsm"
-            >
-              <div className="flex gap-5 items-center">
-              <p className="lg:flex sm:hidden">
-                  <BsPersonCircle size="40" />
-                </p>
-                <p className="lg:hidden">
-                  <BsPersonCircle size="20" />
-                </p>
-                <h1 className="lg:text-sm sm:text-xsm font-bold">{post.user_name}</h1>
-              </div>
-              <p>{post.text}</p>
-              <div className="grid grid-cols-2">
-                {post.images.map((image, index) => {
-                  const dataURL = `data:image/jpeg;base64,${encodeBase64(
-                    image.data
-                  )}`;
-                  return (
-                    <img
-                      key={index}
-                      src={dataURL}
-                      alt={`Post ${index}`}
-                      className="lg:w-[350px] sm:w-[160px]  rounded-[20px]"
-                    />
-                  );
-                })}
-              </div>
-            </a>
-          ))
-        : ""}
-      </div>)}
+        <div>
+          {activeTab === "Tab 1" && (
+            <div className="lg:min-h-[60vh] sm:min-h-[75vh]">
+              {allPosts.length? 
+              allPosts.map((post) => (
+                <a
+                  href={`/post/${post._id}`}
+                  className="flex flex-col gap-5 lg:w-[800px] sm:w-[300px] border border-gray lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:m-4 lg:text-sm sm:text-xxsm "
+                >
+                  <div className="flex gap-5 items-center">
+                    <p className="lg:flex sm:hidden">
+                      <BsPersonCircle size="40" />
+                    </p>
+                    <p className="lg:hidden">
+                      <BsPersonCircle size="20" />
+                    </p>
+                    <h1 className="lg:text-sm sm:text-xsm font-bold">
+                      {post.user_name}
+                    </h1>
+                  </div>
+                  <p>{post.text}</p>
+                  <div className="grid grid-cols-2">
+                    {post.images.map((image, index) => {
+                      const dataURL = `data:image/jpeg;base64,${encodeBase64(
+                        image.data
+                      )}`;
+                      return (
+                        <img
+                          key={index}
+                          src={dataURL}
+                          alt={`Post ${index}`}
+                          className="lg:w-[350px] sm:w-[160px] rounded-[20px]"
+                        />
+                      );
+                    })}
+                  </div>
+                </a>
+              ))
+              : <div className="h-[500px] flex justify-center items-center font-extrabold lg:text-md sm:text-xsm">There is no posts yet!</div>}
+            </div>
+          )}
+          {activeTab === "Tab 2"&& (
+            <div className=" lg:min-h-[60vh] sm:min-h-[75vh]">
+              {myPosts.length? 
+             myPosts.map((post) => (
+                <a
+                  href={`/post/${post._id}`}
+                  className="flex flex-col gap-5 lg:w-[800px] sm:w-[300px] border border-gray lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:m-4 lg:text-sm sm:text-xxsm"
+                >
+                  <div className="flex gap-5 items-center">
+                    <p className="lg:flex sm:hidden">
+                      <BsPersonCircle size="40" />
+                    </p>
+                    <p className="lg:hidden">
+                      <BsPersonCircle size="20" />
+                    </p>
+                    <h1 className="lg:text-sm sm:text-xsm font-bold">
+                      {post.user_name}
+                    </h1>
+                  </div>
+                  <p>{post.text}</p>
+                  <div className="grid grid-cols-2">
+                    {post.images.map((image, index) => {
+                      const dataURL = `data:image/jpeg;base64,${encodeBase64(
+                        image.data
+                      )}`;
+                      return (
+                        <img
+                          key={index}
+                          src={dataURL}
+                          alt={`Post ${index}`}
+                          className="lg:w-[350px] sm:w-[160px]  rounded-[20px]"
+                        />
+                      );
+                    })}
+                  </div>
+                </a>
+              ))
+              : <div className="h-[500px] flex justify-center items-center font-extrabold lg:text-md sm:text-xsm">You did not post any posts yet!</div>}
+            </div>
+          )}
+        </div>
+      )}
       <span className="bg-lightRed fixed right-0 bottom-0 m-10 rounded-full text-xxlg flex items-center justify-center w-20 h-20">
         <a href="/posting">+</a>
       </span>

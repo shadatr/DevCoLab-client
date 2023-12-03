@@ -32,8 +32,8 @@ class App extends Component {
             </Routes>
           </div>
         </BrowserRouter>
-        <Footer/>
         <Toaster position="bottom-right" reverseOrder={false} />
+        <Footer/>
     </div>
   );
 }}

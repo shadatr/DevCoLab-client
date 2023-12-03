@@ -47,6 +47,8 @@ function Posting(props) {
     }
     axios.post("/api/post", data);
     toast.success("Successfully posted!");
+    setSelectedImage([])
+    setPostText("")
   };
 
   const handleDelete = (name) => {
@@ -74,6 +76,7 @@ function Posting(props) {
             className="bg-primary w-full outline-none lg:h-[300px] sm:h-[150px] lg:text-sm sm:text-xxsm"
             placeholder="write your post here..."
             onChange={(e) => setPostText(e.target.value)}
+            value={postText}
           />
           {selectedImage.length > 0 && (
             <div className="grid grid-cols-2">

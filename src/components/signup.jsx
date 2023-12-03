@@ -1,17 +1,17 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const email = useRef(null);
   const password1 = useRef(null);
   const password2 = useRef(null);
-
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     if (
       !password1.current?.value ||
       !password2.current?.value ||
@@ -20,24 +20,27 @@ const SignUpPage = () => {
       toast.error("You should fill all the blank spaces");
       return;
     }
-
+  
     if (password1.current?.value !== password2.current?.value) {
       toast.error("The password doesn't match");
       return;
     }
-
+  
     const data = {
       password: password1.current.value,
       name: email.current.value,
     };
+  
     try {
-      axios.post("/api/signup", data);
-      toast.success("The account created successfully");
-    } catch {
-      toast.success("An error happened while creating the account");
+      await axios.post("/api/signup", data).then(()=>{
+        navigate('/auth/login');
+      })
+    } catch (error) {
+      console.error("Error during signup:", error);
+      toast.error("An error occurred while creating the account");
     }
   };
-
+  
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <form

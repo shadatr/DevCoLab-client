@@ -5,6 +5,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
+import LoadingIcons from "react-loading-icons";
 
 const Post = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const Post = () => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const uploadData = async () => {
@@ -20,6 +22,7 @@ const Post = () => {
         setPost(res.data);
         const res2 = await axios.get(`/api/post/${id}/comments`);
         setComments(res2.data);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -61,8 +64,14 @@ const Post = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-[100%] min-h-[85vh] lg:text-sm sm:text-xxsm">
+      {loading ? (
+        <div className="items-center justify-cente flex h-[50vh] mt-[200px]">
+          <LoadingIcons.TailSpin stroke="white" width='100' height='100' speed={.8}  />
+        </div>
+      ) : (
+      <div>
       {post && (
-        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[350px] lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:m-10 sm:mt-4 ">
+        <div className="flex flex-col gap-5 lg:w-[1000px] sm:w-[350px] lg:p-10 sm:p-5 lg:rounded-[30px] sm:rounded-[15px] lg:tm-10 sm:mt-4 ">
           <div className="flex gap-5 items-center">
             <p className="lg:flex sm:hidden">
               <BsPersonCircle size="40" />
@@ -92,7 +101,7 @@ const Post = () => {
           </div>
 
           <div className="border-t border-gray" />
-          <div className="flex items-center justify-center lg:m-5 sm:m-1">
+          <div className="flex items-center justify-center lg:mt-5 sm:m-1">
             <span className=" lg:w-[40px] lg:h-[40px] sm:w-[30px] sm:h-[30px]">
             <p className="lg:flex sm:hidden">
               <BsPersonCircle size="40" />
@@ -140,6 +149,7 @@ const Post = () => {
           </span>
         ))}
       </div>
+      </div>)}
     </div>
   );
 };

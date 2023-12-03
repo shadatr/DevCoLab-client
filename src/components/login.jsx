@@ -11,27 +11,22 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     const data = {
       name: email,
       password: password,
     };
-    
-    try {
-      const response = await axios.post("/api/login", data)
-      const userObject = response.data;
-      console.log(userObject)
-      if(userObject.name){
+    try{
+      const res = await axios.post("/api/login", data)
+      const userObject = res.data;
+
+      if(userObject){
         Cookies.set('user', JSON.stringify(userObject));
-        toast.success("success")
         navigate('/');
         window.location.reload();
       }
-      else{
-        toast.error("error")
-      }
-    } catch (error) {
-      toast.error("error")
+    }catch(err){
+      toast.error("The password or email are incorrect")
     }
   };
   
