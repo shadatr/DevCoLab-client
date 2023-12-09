@@ -24,12 +24,10 @@ const advantages = [
       "At DevCoLab, your projects are more than lines of code; they're a canvas for collaboration. Receive valuable feedback from other developers, helping you refine your work, fix bugs, and fine-tune your creations.",
     image: like,
   },
-  {
-    title: " Share Your Ideas",
+  {title: " Share Your Ideas",
     description:
       "Have a groundbreaking idea? Share it with the world and see it evolve with the input of a global community. Collaborate with others to turn your vision into a reality.",
-    image: idea,
-  },
+    image: idea,},
 ];
 
 const Home = () => {
