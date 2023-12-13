@@ -16,6 +16,7 @@ const Header = () => {
         setUserData(parsedUser);
       }
     };
+    
     download();
   }, []);
   
