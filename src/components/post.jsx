@@ -24,7 +24,6 @@ const Post = () => {
         setComments(res2.data);
         setLoading(false)
       } catch (error) {
-        console.error("Error fetching post:", error);
       }
     };
 
